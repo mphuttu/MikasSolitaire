@@ -101,6 +101,12 @@
     <None Include="res\MikasSolitaire.rc2">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\EnglishStrings.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Finnish.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MikasSolitaire.rc">

@@ -130,6 +130,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_FILE_SAVE_AS);
 	lstBasicCommands.AddTail(ID_GAME_RESTART);
 	lstBasicCommands.AddTail(ID_GAME_HELP);
+	lstBasicCommands.AddTail(ID_LANGUAGE_ENGLISH);
+	lstBasicCommands.AddTail(ID_LANGUAGE_FINNISH);
 	lstBasicCommands.AddTail(ID_APP_EXIT);
 	lstBasicCommands.AddTail(ID_EDIT_CUT);
 	lstBasicCommands.AddTail(ID_EDIT_PASTE);
@@ -143,6 +145,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
 
 	return 0;
+}
+
+BOOL CMainFrame::ResetLanguageMenu()
+{
+	return m_wndMenuBar.RestoreOriginalState();
 }
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)

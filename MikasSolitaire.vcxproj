@@ -229,6 +229,8 @@
   <ItemGroup>
     <None Include="MikasSolitaire.reg" />
     <None Include="res\MikasSolitaire.rc2" />
+    <None Include="res\EnglishStrings.rc2" />
+    <None Include="res\Finnish.rc2" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MikasSolitaire.rc" />
@@ -420,6 +422,7 @@
   </ItemGroup>
   <ItemGroup>
     <HelpSource Include="help\*.htm;help\*.css;help\*.hhp;help\*.hhc;help\*.hhk" />
+    <FinnishHelpSource Include="help\fi\*.htm;help\fi\*.css;help\fi\*.hhp;help\fi\*.hhc;help\fi\*.hhk" />
   </ItemGroup>
   <Target Name="CompileHtmlHelp" BeforeTargets="Build" Inputs="@(HelpSource)" Outputs="$(MSBuildProjectDirectory)\help\MikasSolitaire.chm">
     <PropertyGroup>
@@ -431,6 +434,16 @@
     </Exec>
     <Error Condition="'$(HtmlHelpExitCode)' != '1' Or !Exists('$(MSBuildProjectDirectory)\help\MikasSolitaire.chm')" Text="HTML Help compilation failed." />
   </Target>
+  <Target Name="CompileFinnishHtmlHelp" BeforeTargets="Build" Inputs="@(FinnishHelpSource)" Outputs="$(MSBuildProjectDirectory)\help\fi\MikasSolitaire-fi.chm">
+    <PropertyGroup>
+      <HtmlHelpCompiler>$(MSBuildProgramFiles32)\HTML Help Workshop\hhc.exe</HtmlHelpCompiler>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(HtmlHelpCompiler)')" Text="Install HTML Help Workshop to compile the application help." />
+    <Exec Command="&quot;$(HtmlHelpCompiler)&quot; &quot;$(MSBuildProjectDirectory)\help\fi\MikasSolitaire.hhp&quot;" IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="FinnishHtmlHelpExitCode" />
+    </Exec>
+    <Error Condition="'$(FinnishHtmlHelpExitCode)' != '1' Or !Exists('$(MSBuildProjectDirectory)\help\fi\MikasSolitaire-fi.chm')" Text="Finnish HTML Help compilation failed." />
+  </Target>
   <Target Name="CopyCardImages" AfterTargets="Build">
     <ItemGroup>
       <CardFront Include="res\front\*.png" />
@@ -439,6 +452,7 @@
     <Copy SourceFiles="@(CardFront)" DestinationFiles="@(CardFront->'$(OutDir)res\front\%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(CardBack)" DestinationFiles="@(CardBack->'$(OutDir)res\back\%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\help\MikasSolitaire.chm" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\help\fi\MikasSolitaire-fi.chm" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
   </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

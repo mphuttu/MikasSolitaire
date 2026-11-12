@@ -1,0 +1,25 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=MikasSolitaire-fi.chm
+Contents file=contents.hhc
+Index file=index.hhk
+Default topic=welcome.htm
+Display compile progress=Yes
+Full-text search=Yes
+Language=0x40b Finnish
+Title=MikasSolitaire - ohje
+
+[FILES]
+welcome.htm
+getting-started.htm
+rules.htm
+customization.htm
+properties.htm
+saving.htm
+examples.htm
+tips.htm
+troubleshooting.htm
+faq.htm
+technical.htm
+release-notes.htm
+style.css

@@ -9,6 +9,7 @@ MikasSolitaire/x64/
 MikasSolitaire/x86/
 installer/Output/
 help/MikasSolitaire.chm
+help/fi/MikasSolitaire-fi.chm
 *.aps
 *.user
 *.suo
@@ -24,3 +25,5 @@ help/MikasSolitaire.chm
 *.mksol
 GameTests.exe
 GameTests.exe.manifest
+LocalizationTests.exe
+LocalizationTests.exe.manifest

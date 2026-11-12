@@ -1,0 +1,20 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><meta charset="windows-1252"></HEAD><BODY>
+<OBJECT type="text/site properties"><param name="Window Styles" value="0x800025"></OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Tervetuloa"><param name="Local" value="welcome.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Aloittaminen"><param name="Local" value="getting-started.htm"></OBJECT>
+<UL><LI><OBJECT type="text/sitemap"><param name="Name" value="S&#228;&#228;nn&#246;t ja siirrot"><param name="Local" value="rules.htm"></OBJECT></UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Ohjelman k&#228;ytt&#246;"><param name="Local" value="properties.htm"></OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Mukauttaminen"><param name="Local" value="customization.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Komennot"><param name="Local" value="properties.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Tallentaminen, avaaminen ja uudelleen aloittaminen"><param name="Local" value="saving.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Esimerkkej&#228;"><param name="Local" value="examples.htm"></OBJECT>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Vinkkej&#228;"><param name="Local" value="tips.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Ongelmanratkaisu"><param name="Local" value="troubleshooting.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Usein kysytyt kysymykset"><param name="Local" value="faq.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Tekniset tiedot"><param name="Local" value="technical.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Julkaisutiedot"><param name="Local" value="release-notes.htm"></OBJECT>
+</UL></BODY></HTML>

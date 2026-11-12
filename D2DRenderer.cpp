@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "D2DRenderer.h"
+#include "Resource.h"
 #pragma comment(lib, "d2d1.lib")
 
 bool CD2DRenderer::Initialize(CString& error)
@@ -7,7 +8,7 @@ bool CD2DRenderer::Initialize(CString& error)
 	HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m_factory.GetAddressOf());
 	if (FAILED(hr))
 	{
-		error.Format(L"Cannot initialize Direct2D (0x%08X).", static_cast<unsigned>(hr));
+		error.Format(IDS_D2D_INIT_FAILED, static_cast<unsigned>(hr));
 		return false;
 	}
 	return m_images.LoadAllCards(error);

@@ -2,9 +2,9 @@
 <html lang="en"><head><meta charset="utf-8"><title>Technical Information</title><link rel="stylesheet" href="style.css"></head>
 <body><h1>Technical Information</h1>
 <h2>Description</h2><p>MikasSolitaire is a native Windows MFC application. Direct2D renders the cards, and Windows Imaging Component decodes and scales the supplied PNG images.</p>
-<h2>How to use</h2><p>Keep <code>MikasSolitaire.exe</code>, <code>MikasSolitaire.chm</code>, and the <code>res\front</code> and <code>res\back</code> directories together. The x64 installer includes the Microsoft Visual C++ runtime redistributable.</p>
+<h2>How to use</h2><p>Keep <code>MikasSolitaire.exe</code>, <code>MikasSolitaire.chm</code>, <code>MikasSolitaire-fi.chm</code>, and the <code>res\front</code> and <code>res\back</code> directories together. The x64 installer includes the Microsoft Visual C++ runtime redistributable.</p>
 <p class="note"><strong>Note:</strong> Saved <code>.mksol</code> files include the current and original deal; the six-back preference is stored in the current user's Windows profile.</p>
-<p class="tip"><strong>Tip:</strong> Build the solution with Visual Studio 2026 and the C++ MFC components. HTML Help Workshop compiles <code>help\MikasSolitaire.hhp</code>.</p>
+<p class="tip"><strong>Tip:</strong> Build the solution with Visual Studio 2026 and the C++ MFC components. HTML Help Workshop compiles both help projects.</p>
 <p class="warning"><strong>Warning:</strong> Avoid editing binary save files; invalid or unsupported data is rejected.</p>
 <h2>Limitations</h2><p>The provided installer targets 64-bit Windows. HTML Help is a Windows component; CHM files may be blocked from network or Internet locations.</p>
 <h2>Example</h2><p>A portable build needs the application, its matching Visual C++ runtime, 52 face images, six back images, and the compiled help file.</p>

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CardImageManager.h"
+#include "Resource.h"
 #pragma comment(lib, "windowscodecs.lib")
 
 bool CCardImageManager::LoadAllCards(CString& error)
@@ -8,21 +9,21 @@ bool CCardImageManager::LoadAllCards(CString& error)
 		IID_PPV_ARGS(m_factory.GetAddressOf()));
 	if (FAILED(hr))
 	{
-		error.Format(L"Cannot initialize the image decoder (0x%08X).", static_cast<unsigned>(hr));
+		error.Format(IDS_DECODER_FAILED, static_cast<unsigned>(hr));
 		return false;
 	}
 	wchar_t path[32768];
 	DWORD length = GetModuleFileNameW(nullptr, path, _countof(path));
 	if (length == 0 || length >= _countof(path))
 	{
-		error = L"Cannot determine the executable directory.";
+		error.LoadString(IDS_EXE_DIRECTORY_FAILED);
 		return false;
 	}
 	CString directory(path);
 	int separator = directory.ReverseFind(L'\\');
 	if (separator < 0)
 	{
-		error = L"Cannot determine the executable directory.";
+		error.LoadString(IDS_EXE_DIRECTORY_FAILED);
 		return false;
 	}
 	directory = directory.Left(separator);
@@ -36,7 +37,7 @@ bool CCardImageManager::LoadAllCards(CString& error)
 			hr = LoadImage(file, m_faceSources[suit][rank - 1]);
 			if (FAILED(hr))
 			{
-				error.Format(L"Cannot load card image:\n%s\nError: 0x%08X",
+				error.Format(IDS_CARD_IMAGE_FAILED,
 					file.GetString(), static_cast<unsigned>(hr));
 				return false;
 			}
@@ -49,7 +50,7 @@ bool CCardImageManager::LoadAllCards(CString& error)
 		hr = LoadImage(file, m_backSources[i]);
 		if (FAILED(hr))
 		{
-			error.Format(L"Cannot load card image:\n%s\nError: 0x%08X",
+			error.Format(IDS_CARD_IMAGE_FAILED,
 				file.GetString(), static_cast<unsigned>(hr));
 			return false;
 		}

@@ -14,6 +14,11 @@
 #include <htmlhelp.h>
 #pragma comment(lib, "htmlhelp.lib")
 
+namespace
+{
+	constexpr int FinnishMenuVersion = 1;
+}
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -24,6 +29,8 @@
 BEGIN_MESSAGE_MAP(CMikasSolitaireApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, &CMikasSolitaireApp::OnAppAbout)
 	ON_COMMAND(ID_GAME_HELP, &CMikasSolitaireApp::OnHelpContents)
+	ON_COMMAND_RANGE(ID_LANGUAGE_ENGLISH, ID_LANGUAGE_FINNISH, &CMikasSolitaireApp::OnLanguage)
+	ON_UPDATE_COMMAND_UI_RANGE(ID_LANGUAGE_ENGLISH, ID_LANGUAGE_FINNISH, &CMikasSolitaireApp::OnUpdateLanguage)
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
@@ -75,6 +82,16 @@ BOOL CMikasSolitaireApp::InitInstance()
 
 	CWinAppEx::InitInstance();
 
+	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+	m_language = GetProfileInt(L"Game", L"Language", 0) == 1 ? 1 : 0;
+	m_requestedLanguage = m_language;
+	LANGID language = m_language ? MAKELANGID(LANG_FINNISH, SUBLANG_DEFAULT) :
+		MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US);
+	if (SetThreadUILanguage(language) != language)
+	{
+		AfxMessageBox(L"Unable to set the application language. / Ohjelman kielt\u00e4 ei voitu asettaa.", MB_ICONERROR);
+		return FALSE;
+	}
 
 	// Initialize OLE libraries
 	if (!AfxOleInit())
@@ -97,7 +114,6 @@ BOOL CMikasSolitaireApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
-	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 
 
@@ -138,6 +154,17 @@ BOOL CMikasSolitaireApp::InitInstance()
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
 
+	if (GetProfileInt(L"Game", L"MenuLanguage", -1) != m_language ||
+		(m_language == 1 && GetProfileInt(L"Game", L"FinnishMenuVersion", 0) != FinnishMenuVersion))
+	{
+		CMainFrame* frame = DYNAMIC_DOWNCAST(CMainFrame, m_pMainWnd);
+		if (!frame || !frame->ResetLanguageMenu())
+		{
+			AfxMessageBox(IDS_MENU_RESET_FAILED, MB_ICONERROR);
+			return FALSE;
+		}
+	}
+
 	// The one and only window has been initialized, so show and update it
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
@@ -163,27 +190,47 @@ void CMikasSolitaireApp::OnHelpContents()
 	DWORD length = GetModuleFileNameW(nullptr, path, _countof(path));
 	if (length == 0 || length >= _countof(path))
 	{
-		AfxMessageBox(L"Cannot determine the application directory.", MB_ICONERROR);
+		AfxMessageBox(IDS_HELP_DIRECTORY_FAILED, MB_ICONERROR);
 		return;
 	}
 	CString helpPath(path);
 	int separator = helpPath.ReverseFind(L'\\');
 	if (separator < 0)
 	{
-		AfxMessageBox(L"Cannot determine the application directory.", MB_ICONERROR);
+		AfxMessageBox(IDS_HELP_DIRECTORY_FAILED, MB_ICONERROR);
 		return;
 	}
-	helpPath = helpPath.Left(separator + 1) + L"MikasSolitaire.chm";
+	helpPath = helpPath.Left(separator + 1) + (IsFinnish() ? L"MikasSolitaire-fi.chm" : L"MikasSolitaire.chm");
 	DWORD attributes = GetFileAttributesW(helpPath);
 	if (attributes == INVALID_FILE_ATTRIBUTES || (attributes & FILE_ATTRIBUTE_DIRECTORY))
 	{
 		CString message;
-		message.Format(L"The help file could not be found:\n%s", helpPath.GetString());
+		message.Format(IDS_HELP_MISSING, helpPath.GetString());
 		AfxMessageBox(message, MB_ICONERROR);
 		return;
 	}
 	if (!::HtmlHelpW(m_pMainWnd ? m_pMainWnd->GetSafeHwnd() : nullptr, helpPath, HH_DISPLAY_TOC, 0))
-		AfxMessageBox(L"Windows could not open the help file.", MB_ICONERROR);
+		AfxMessageBox(IDS_HELP_OPEN_FAILED, MB_ICONERROR);
+}
+
+void CMikasSolitaireApp::OnLanguage(UINT id)
+{
+	int language = id == ID_LANGUAGE_FINNISH ? 1 : 0;
+	if (language == m_requestedLanguage) return;
+	if (language != m_language &&
+		AfxMessageBox(IDS_LANGUAGE_CONFIRM, MB_YESNO | MB_ICONQUESTION) != IDYES) return;
+	if (!WriteProfileInt(L"Game", L"Language", language))
+	{
+		AfxMessageBox(IDS_LANGUAGE_SAVE_FAILED, MB_ICONERROR);
+		return;
+	}
+	m_requestedLanguage = language;
+	if (language != m_language) AfxMessageBox(IDS_LANGUAGE_RESTART, MB_ICONINFORMATION);
+}
+
+void CMikasSolitaireApp::OnUpdateLanguage(CCmdUI* cmdUI)
+{
+	cmdUI->SetRadio(cmdUI->m_nID == ID_LANGUAGE_ENGLISH + m_requestedLanguage);
 }
 
 // CMikasSolitaireApp message handlers
@@ -245,6 +292,10 @@ void CMikasSolitaireApp::LoadCustomState()
 
 void CMikasSolitaireApp::SaveCustomState()
 {
+	BOOL languageSaved = WriteProfileInt(L"Game", L"MenuLanguage", m_language);
+	BOOL versionSaved = WriteProfileInt(L"Game", L"FinnishMenuVersion", FinnishMenuVersion);
+	if (!languageSaved || !versionSaved)
+		AfxMessageBox(IDS_LANGUAGE_SAVE_FAILED, MB_ICONWARNING);
 }
 
 // CMikasSolitaireApp message handlers

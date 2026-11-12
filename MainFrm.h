@@ -13,6 +13,7 @@ protected: // create from serialization only
 
 // Attributes
 public:
+	BOOL ResetLanguageMenu();
 
 // Operations
 public:

@@ -83,14 +83,14 @@ BOOL CMikasSolitaireDoc::OnSaveDocument(LPCTSTR path)
 	DWORD length = GetFullPathNameW(path, _countof(fullPath), fullPath, nullptr);
 	if (length == 0 || length >= _countof(fullPath))
 	{
-		AfxMessageBox(L"Cannot determine the save file path.", MB_ICONERROR);
+		AfxMessageBox(IDS_SAVE_PATH_FAILED, MB_ICONERROR);
 		return FALSE;
 	}
 	CString directory(fullPath);
 	int separator = directory.ReverseFind(L'\\');
 	if (separator < 0)
 	{
-		AfxMessageBox(L"Cannot determine the save directory.", MB_ICONERROR);
+		AfxMessageBox(IDS_SAVE_DIRECTORY_FAILED, MB_ICONERROR);
 		return FALSE;
 	}
 	// Keep the separator for drive roots such as C:\.
@@ -124,7 +124,7 @@ BOOL CMikasSolitaireDoc::OnSaveDocument(LPCTSTR path)
 		if (!DeleteFileW(temporary))
 		{
 			CString message;
-			message.Format(L"Could not remove temporary save file:\n%s", temporary);
+			message.Format(IDS_TEMP_REMOVE_FAILED, temporary);
 			AfxMessageBox(message, MB_ICONWARNING);
 		}
 		return FALSE;

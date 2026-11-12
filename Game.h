@@ -19,6 +19,9 @@ public:
 	bool Move(Location from, Location to);
 	bool MoveToFoundation(Location from);
 	bool IsWon() const;
+	bool HasForwardMoves() const;
+	bool CanUndo() const { return !m_history.empty(); }
+	bool Undo();
 	void Restart();
 	void Serialize(CArchive& archive);
 
@@ -28,6 +31,16 @@ public:
 	const std::vector<CCard>& Tableau(int column) const { return m_tableau[column]; }
 
 private:
+	struct Snapshot
+	{
+		std::vector<CCard> stock, waste;
+		std::array<std::vector<CCard>, 4> foundations;
+		std::array<std::vector<CCard>, 7> tableau;
+	};
+	bool CanMove(Location from, Location to) const;
+	void SaveUndo();
+	Snapshot CurrentState() const;
+
 	CDeck m_deck;
 	std::vector<CCard> m_stock;
 	std::vector<CCard> m_waste;
@@ -35,4 +48,5 @@ private:
 	std::array<std::vector<CCard>, 7> m_tableau;
 	std::vector<CCard> m_initialStock;
 	std::array<std::vector<CCard>, 7> m_initialTableau;
+	std::vector<Snapshot> m_history;
 };

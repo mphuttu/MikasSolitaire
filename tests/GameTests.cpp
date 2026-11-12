@@ -65,7 +65,7 @@ static void TestFoundationShortcut()
 		return card;
 	};
 	const std::set<std::pair<int, int>> used = {
-		{0, 1}, {0, 2}, {0, 3}, {1, 1}, {2, 2}, {2, 4}
+		{0, 1}, {0, 2}, {0, 3}, {1, 1}, {1, 5}, {2, 2}, {2, 4}
 	};
 	std::vector<CCard> stock;
 	for (int suit = 0; suit < 4; ++suit)
@@ -76,17 +76,24 @@ static void TestFoundationShortcut()
 	for (int i = 0; i < 4; ++i) pile({});
 	pile({ CCard(Suit::Clubs, 2), faceUp(Suit::Diamonds, 1) });
 	pile({ faceUp(Suit::Clubs, 4), faceUp(Suit::Hearts, 3) });
-	for (int i = 0; i < 5; ++i) pile({});
+	pile({ faceUp(Suit::Diamonds, 5) });
+	for (int i = 0; i < 4; ++i) pile({});
 	fixture.insert(fixture.end(), original.begin() + 8 + 13 + 52 * 3, original.end());
 
 	CGame game;
 	assert(Load(game, fixture));
+	assert(game.Move({ Pile::Tableau, 1, 0 }, { Pile::Tableau, 2, 0 }));
+	assert(game.Undo() && Save(game) == fixture);
 	assert(!game.MoveToFoundation({ Pile::Stock, 0, 0 }));
 	assert(!game.MoveToFoundation({ Pile::Tableau, 0, 0 }));
 	assert(!game.MoveToFoundation({ Pile::Tableau, 1, 0 }));
 	assert(!game.MoveToFoundation({ Pile::Tableau, 1, 1 }));
 	assert(!game.MoveToFoundation({ Pile::Waste, 0, 0 }));
 	assert(Save(game) == fixture);
+	assert(game.MoveToFoundation({ Pile::Waste, 0, 1 }));
+	assert(game.Undo());
+	assert(Save(game) == fixture);
+	assert(!game.Undo());
 	assert(game.MoveToFoundation({ Pile::Waste, 0, 1 }));
 	assert(game.Foundation(0).back().GetRank() == 1);
 	assert(game.MoveToFoundation({ Pile::Waste, 0, 0 }));
@@ -96,13 +103,89 @@ static void TestFoundationShortcut()
 	assert(game.MoveToFoundation({ Pile::Tableau, 0, 1 }));
 	assert(game.Foundation(1).back().GetSuit() == Suit::Diamonds);
 	assert(game.Tableau(0).back().IsFaceUp());
+	assert(game.Undo());
+	assert(game.Tableau(0).size() == 2 && !game.Tableau(0)[0].IsFaceUp());
 	assert(!game.MoveToFoundation({ Pile::Waste, 0, -1 }));
 	assert(!game.MoveToFoundation({ Pile::Foundation, 0, 2 }));
+}
+
+static void TestNoForwardMoves()
+{
+	CGame seed;
+	seed.Initialize();
+	const auto original = Save(seed);
+	auto makeFixture = [&](int reachableWaste)
+	{
+		std::vector<BYTE> fixture(original.begin(), original.begin() + 8);
+		auto pile = [&](const std::vector<CCard>& cards)
+		{
+			fixture.push_back(static_cast<BYTE>(cards.size()));
+			for (const auto& card : cards)
+			{
+				fixture.push_back(static_cast<BYTE>(card.GetSuit()));
+				fixture.push_back(static_cast<BYTE>(card.GetRank()));
+				fixture.push_back(card.IsFaceUp() ? 1 : 0);
+			}
+		};
+		auto up = [](Suit suit, int rank)
+		{
+			CCard card(suit, rank);
+			card.Flip();
+			return card;
+		};
+		std::vector<CCard> hidden;
+		for (int suit = 0; suit < 4; ++suit)
+			for (int rank = 1; rank <= 13; ++rank)
+				if (rank != 13 && !(rank == 2 && suit < 3) &&
+					!((reachableWaste == 1 || reachableWaste == 2) && suit == 0 && rank == 1) &&
+					!(reachableWaste == 2 && suit == 0 && rank == 3))
+					hidden.emplace_back(static_cast<Suit>(suit), rank);
+		pile(reachableWaste == 1 ? std::vector<CCard>{ CCard(static_cast<Suit>(0), 1) } : std::vector<CCard>{});
+		pile(reachableWaste == 2 ? std::vector<CCard>{ up(static_cast<Suit>(0), 1), up(static_cast<Suit>(0), 3) } : std::vector<CCard>{});
+		for (int i = 0; i < 4; ++i) pile({});
+		if (reachableWaste == 3)
+		{
+			hidden.push_back(CCard(static_cast<Suit>(2), 2));
+			hidden.push_back(up(static_cast<Suit>(0), 2));
+			pile(hidden);
+			for (int suit = 0; suit < 4; ++suit) pile({ up(static_cast<Suit>(suit), 13) });
+			pile({ up(static_cast<Suit>(1), 2) });
+			pile({});
+		}
+		else
+		{
+			hidden.push_back(up(static_cast<Suit>(0), 13));
+			pile(hidden);
+			for (int suit = 1; suit < 4; ++suit) pile({ up(static_cast<Suit>(suit), 13) });
+			for (int suit = 0; suit < 3; ++suit) pile({ up(static_cast<Suit>(suit), 2) });
+		}
+		fixture.insert(fixture.end(), original.begin() + 8 + 13 + 52 * 3, original.end());
+		return fixture;
+	};
+	CGame game;
+	auto blocked = makeFixture(0);
+	assert(Load(game, blocked));
+	assert(!game.IsWon() && !game.HasForwardMoves());
+	assert(Save(game) == blocked && !game.CanUndo());
+	auto reachable = makeFixture(1);
+	assert(Load(game, reachable));
+	assert(game.HasForwardMoves());
+	assert(Save(game) == reachable && !game.CanUndo());
+	auto buried = makeFixture(2);
+	assert(Load(game, buried));
+	assert(game.HasForwardMoves());
+	assert(Save(game) == buried && !game.CanUndo());
+	auto kingOnly = makeFixture(3);
+	assert(Load(game, kingOnly));
+	assert(!game.HasForwardMoves());
+	assert(game.Move({ Pile::Tableau, 1, 0 }, { Pile::Tableau, 6, 0 }));
+	assert(game.Undo() && Save(game) == kingOnly);
 }
 
 int main()
 {
 	TestFoundationShortcut();
+	TestNoForwardMoves();
 	CGame game;
 	game.Initialize();
 	std::set<std::pair<int, int>> cards;
@@ -131,9 +214,12 @@ int main()
 		firstPass.push_back(Identity(game.Waste().back()));
 	}
 	assert(game.Stock().empty());
+	const auto beforeRecycle = Save(game);
 	game.DrawStock();
 	assert(game.Waste().empty() && game.Stock().size() == 24);
 	for (const auto& card : game.Stock()) assert(!card.IsFaceUp());
+	assert(game.Undo() && Save(game) == beforeRecycle);
+	assert(game.DrawStock());
 	for (int i = 0; i < 24; ++i)
 	{
 		game.DrawStock();
@@ -216,6 +302,10 @@ int main()
 
 	const auto initial = Save(game);
 	assert(game.DrawStock());
+	assert(game.CanUndo());
+	assert(game.Undo() && Save(game) == initial);
+	assert(!game.Undo());
+	assert(game.DrawStock());
 	assert(game.DrawStock());
 	const auto progress = Save(game);
 	assert(progress != initial);
@@ -223,13 +313,15 @@ int main()
 	restored.Initialize();
 	auto saved = progress;
 	assert(Load(restored, saved));
+	assert(!restored.CanUndo());
 	assert(Save(restored) == progress);
 	restored.Restart();
-	assert(Save(restored) == initial);
+	assert(Save(restored) == initial && !restored.CanUndo());
 
 	auto invalid = initial;
 	invalid[0] ^= 1;
 	assert(!Load(game, invalid) && Save(game) == progress);
+	assert(game.CanUndo());
 	invalid = initial;
 	invalid[9] = 4;
 	assert(!Load(game, invalid) && Save(game) == progress);

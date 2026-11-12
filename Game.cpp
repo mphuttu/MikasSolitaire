@@ -12,6 +12,7 @@ namespace
 
 bool CGame::Initialize()
 {
+	m_history.clear();
 	m_deck.ResetDeck();
 	m_stock.clear();
 	m_waste.clear();
@@ -36,6 +37,7 @@ bool CGame::Initialize()
 bool CGame::DrawStock()
 {
 	if (m_stock.empty() && m_waste.empty()) return false;
+	SaveUndo();
 	if (!m_stock.empty())
 	{
 		CCard card = m_stock.back();
@@ -58,10 +60,33 @@ bool CGame::DrawStock()
 
 void CGame::Restart()
 {
+	m_history.clear();
 	m_stock = m_initialStock;
 	m_tableau = m_initialTableau;
 	m_waste.clear();
 	for (auto& pile : m_foundations) pile.clear();
+}
+
+CGame::Snapshot CGame::CurrentState() const
+{
+	return { m_stock, m_waste, m_foundations, m_tableau };
+}
+
+void CGame::SaveUndo()
+{
+	m_history.push_back(CurrentState());
+}
+
+bool CGame::Undo()
+{
+	if (m_history.empty()) return false;
+	Snapshot state = std::move(m_history.back());
+	m_history.pop_back();
+	m_stock = std::move(state.stock);
+	m_waste = std::move(state.waste);
+	m_foundations = std::move(state.foundations);
+	m_tableau = std::move(state.tableau);
+	return true;
 }
 
 namespace
@@ -192,6 +217,7 @@ void CGame::Serialize(CArchive& archive)
 		m_tableau = std::move(current.tableau);
 		m_initialStock = std::move(initial.stock);
 		m_initialTableau = std::move(initial.tableau);
+		m_history.clear();
 	}
 }
 bool CGame::MoveToFoundation(Location from)
@@ -212,9 +238,26 @@ bool CGame::MoveToFoundation(Location from)
 
 bool CGame::Move(Location from, Location to)
 {
-	if (from.pile == Pile::Foundation && to.pile == Pile::Foundation) return false;
+	if (!CanMove(from, to)) return false;
+	SaveUndo();
 	std::vector<CCard>* source = nullptr;
-	std::vector<CCard>* destination = nullptr;
+	if (from.pile == Pile::Waste) source = &m_waste;
+	else if (from.pile == Pile::Foundation) source = &m_foundations[from.column];
+	else source = &m_tableau[from.column];
+	std::vector<CCard>* destination = to.pile == Pile::Foundation ?
+		&m_foundations[to.column] : &m_tableau[to.column];
+	destination->insert(destination->end(), source->begin() + from.card, source->end());
+	source->erase(source->begin() + from.card, source->end());
+	if (from.pile == Pile::Tableau && !source->empty() && !source->back().IsFaceUp())
+		source->back().Flip();
+	return true;
+}
+
+bool CGame::CanMove(Location from, Location to) const
+{
+	if (from.pile == Pile::Foundation && to.pile == Pile::Foundation) return false;
+	const std::vector<CCard>* source = nullptr;
+	const std::vector<CCard>* destination = nullptr;
 	if (from.pile == Pile::Waste) source = &m_waste;
 	else if (from.pile == Pile::Foundation && from.column >= 0 && from.column < 4)
 		source = &m_foundations[from.column];
@@ -257,11 +300,43 @@ bool CGame::Move(Location from, Location to)
 		destination->back().GetRank() != card.GetRank() + 1 ||
 		IsRed(destination->back()) == IsRed(card)) return false;
 
-	destination->insert(destination->end(), source->begin() + from.card, source->end());
-	source->erase(source->begin() + from.card, source->end());
-	if (from.pile == Pile::Tableau && !source->empty() && !source->back().IsFaceUp())
-		source->back().Flip();
 	return true;
+}
+
+bool CGame::HasForwardMoves() const
+{
+	auto canAdvance = [](const CGame& game, Location from)
+	{
+		for (int i = 0; i < 4; ++i)
+			if (game.CanMove(from, { Pile::Foundation, i, 0 })) return true;
+		for (int i = 0; i < 7; ++i)
+		{
+			// Relocating an entire king column to an empty slot changes nothing.
+			if (from.pile == Pile::Tableau && from.card == 0 && game.m_tableau[i].empty())
+				continue;
+			if (game.CanMove(from, { Pile::Tableau, i, 0 })) return true;
+		}
+		return false;
+	};
+	for (int column = 0; column < 7; ++column)
+		for (size_t card = 0; card < m_tableau[column].size(); ++card)
+			if (canAdvance(*this, { Pile::Tableau, column, static_cast<int>(card) })) return true;
+
+	CGame probe;
+	probe.m_stock = m_stock;
+	probe.m_waste = m_waste;
+	probe.m_foundations = m_foundations;
+	probe.m_tableau = m_tableau;
+	const size_t count = m_stock.size() + m_waste.size();
+	for (size_t i = 0; i <= count + 1; ++i)
+	{
+		if (!probe.m_waste.empty() &&
+			canAdvance(probe, { Pile::Waste, 0, static_cast<int>(probe.m_waste.size() - 1) }))
+			return true;
+		if (!probe.DrawStock()) break;
+		probe.m_history.clear();
+	}
+	return false;
 }
 
 bool CGame::IsWon() const

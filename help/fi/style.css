@@ -1,0 +1,11 @@
+body { font: 10pt "Segoe UI", Tahoma, sans-serif; color: #202020; margin: 20px; line-height: 1.45; }
+h1 { color: #124e35; font-size: 19pt; border-bottom: 1px solid #9dbbae; padding-bottom: 6px; }
+h2 { color: #124e35; font-size: 13pt; margin-top: 20px; }
+a { color: #0755a0; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #b8c5bd; padding: 5px 8px; text-align: left; vertical-align: top; }
+th { background: #e6f0e9; }
+.note, .tip, .warning { padding: 8px 10px; margin: 10px 0; border-left: 4px solid #608c73; background: #eef6f0; }
+.warning { border-color: #b47700; background: #fff6df; }
+.related { border-top: 1px solid #b8c5bd; margin-top: 24px; padding-top: 8px; }
+code { font-family: Consolas, monospace; }

@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><meta charset="windows-1252"></HEAD><BODY><UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="aloittaminen"><param name="Local" value="getting-started.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="asentaminen"><param name="Local" value="technical.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="avaaminen"><param name="Local" value="saving.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="kieli"><param name="Local" value="customization.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="korttien taustat"><param name="Local" value="customization.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="kumoaminen"><param name="Local" value="properties.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="kaksoisnapsautus"><param name="Local" value="rules.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="maapakat"><param name="Local" value="rules.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="nostopakka"><param name="Local" value="rules.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="ongelmanratkaisu"><param name="Local" value="troubleshooting.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="pikan&#228;pp&#228;imet"><param name="Local" value="properties.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="tallentaminen"><param name="Local" value="saving.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="uudelleen aloittaminen"><param name="Local" value="saving.htm"></OBJECT>
+</UL></BODY></HTML>
