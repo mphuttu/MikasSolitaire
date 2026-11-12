@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <ProjectGuid>{99EBAFB6-A139-D24C-F0A7-D1659D61C048}</ProjectGuid>
+    <Keyword>MFCProj</Keyword>
+    <RootNamespace>MikasSolitaire</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Card.h" />
+    <ClInclude Include="CardImageManager.h" />
+    <ClInclude Include="D2DRenderer.h" />
+    <ClInclude Include="Deck.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MikasSolitaire.h" />
+    <ClInclude Include="MikasSolitaireDoc.h" />
+    <ClInclude Include="MikasSolitaireView.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Card.cpp" />
+    <ClCompile Include="CardImageManager.cpp" />
+    <ClCompile Include="D2DRenderer.cpp" />
+    <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MikasSolitaire.cpp" />
+    <ClCompile Include="MikasSolitaireDoc.cpp" />
+    <ClCompile Include="MikasSolitaireView.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MikasSolitaire.reg" />
+    <None Include="res\MikasSolitaire.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MikasSolitaire.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\back\Card-Back-01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\back\Card-Back-02.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\back\Card-Back-03.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\back\Card-Back-04.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\back\Card-Back-05.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\back\Card-Back-06.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\cc-by.ico">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c02.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c03.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c04.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c05.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c06.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c07.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c08.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c09.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c10.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c11.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c12.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\c13.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d02.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d03.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d04.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d05.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d06.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d07.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d08.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d09.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d10.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d11.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d12.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\d13.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h02.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h03.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h04.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h05.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h06.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h07.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h08.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h09.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h10.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h11.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h12.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\h13.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s01.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s02.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s03.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s04.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s05.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s06.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s07.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s08.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s09.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s10.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s11.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s12.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\front\s13.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="res\MikasSolitaire.ico" />
+    <Image Include="res\MikasSolitaireDoc.ico" />
+    <Image Include="res\MikasSolitaireMainIco.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="res\userimages.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <HelpSource Include="help\*.htm;help\*.css;help\*.hhp;help\*.hhc;help\*.hhk" />
+  </ItemGroup>
+  <Target Name="CompileHtmlHelp" BeforeTargets="Build" Inputs="@(HelpSource)" Outputs="$(MSBuildProjectDirectory)\help\MikasSolitaire.chm">
+    <PropertyGroup>
+      <HtmlHelpCompiler>$(MSBuildProgramFiles32)\HTML Help Workshop\hhc.exe</HtmlHelpCompiler>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(HtmlHelpCompiler)')" Text="Install HTML Help Workshop to compile the application help." />
+    <Exec Command="&quot;$(HtmlHelpCompiler)&quot; &quot;$(MSBuildProjectDirectory)\help\MikasSolitaire.hhp&quot;" IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="HtmlHelpExitCode" />
+    </Exec>
+    <Error Condition="'$(HtmlHelpExitCode)' != '1' Or !Exists('$(MSBuildProjectDirectory)\help\MikasSolitaire.chm')" Text="HTML Help compilation failed." />
+  </Target>
+  <Target Name="CopyCardImages" AfterTargets="Build">
+    <ItemGroup>
+      <CardFront Include="res\front\*.png" />
+      <CardBack Include="res\back\*.png" />
+    </ItemGroup>
+    <Copy SourceFiles="@(CardFront)" DestinationFiles="@(CardFront->'$(OutDir)res\front\%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(CardBack)" DestinationFiles="@(CardBack->'$(OutDir)res\back\%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\help\MikasSolitaire.chm" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
